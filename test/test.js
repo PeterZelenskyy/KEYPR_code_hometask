@@ -6,14 +6,18 @@ describe('#indexOf()', () => {
     assert.equal(-1, [1, 2, 3].indexOf(0));
   });
 
-  it.only('request the first test', (done) => {
+  it('request the first test', (done) => {
     console.log('error:');
     request('http://www.google.com', function (error, response, body) {
       done();
       console.log('error123');
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', body); // Print the HTML for the Google homepage.
+      //  console.log('body:', body); // Print the HTML for the Google homepage.
     });
   });
+
+  it('Environment var testing', () => {
+    assert.equal(2, process.env.PETYA);
+  })
 });
