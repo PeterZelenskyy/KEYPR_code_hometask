@@ -1,0 +1,14 @@
+node_modules
+.tmp
+.log
+.idea
+.DS_Store
+reports /
+.orig
+
+# Do not add style guide reports to version control
+jscs
+
+*.iml
+npm-debug.log
+debug.log
