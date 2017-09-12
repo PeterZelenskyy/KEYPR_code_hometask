@@ -1,5 +1,6 @@
-var assert = require("assert");
-var request = require('request');
+const assert = require("assert");
+const request = require('request');
+const login_url = 'https://' + process.env.LOGIN_GitH + ':' + process.env.TOKEN + '@api.github.com/user';
 describe('#indexOf()', () => {
   it('should return -1 when the value is not present', function () {
     assert.equal(-1, [1, 2, 3].indexOf(5));
@@ -20,4 +21,19 @@ describe('#indexOf()', () => {
   it('Environment var testing', () => {
     assert.equal(2, process.env.PETYA);
   })
-});
+
+  it.only('Login to Github', (done) => {
+    const options = {
+      url: login_url,
+      headers: {'User-Agent': 'request'}
+    }
+    function callback(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        let respBody = JSON.parse(body);
+        console.log(respBody.login);
+        done();
+      }
+    }
+    request(options, callback); 
+  })
+})
