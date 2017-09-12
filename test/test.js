@@ -1,10 +1,11 @@
 const assert = require("assert");
 const request = require('request');
-const login_url = 'https://' + process.env.LOGIN_GitH + ':' + process.env.TOKEN + '@api.github.com/user';
+const should = require('chai').should();
+const baseUrl = 'https://' + process.env.LOGIN_GitH + ':' + process.env.TOKEN + '@api.github.com';
 describe('#indexOf()', () => {
-  before('Login to Github', (done) => {
+  it('Login to Github', (done) => {
     const options = {
-      url: login_url,
+      url: `${baseUrl}/user`, //template literal, just trying to use it the first time =)
       headers: {'User-Agent': 'request'}
     }
     function callback(error, response, body) {
@@ -17,6 +18,24 @@ describe('#indexOf()', () => {
     request(options, callback);
   })
 
+  it('update pull request and check that title has changed properly', (done) => {
+    const options = {
+      url: `${baseUrl}/repos/${process.env.LOGIN_GitH}/KEYPR_code_hometask/pulls/1`,
+      headers: {'User-Agent': 'request'},
+      method: 'PATCH',
+      json: true,
+      body: {"title": "new title3"}
+    }
+    function callback(error, response, respBody) {
+      if (!error && response.statusCode == 200) {
+     //  let respBody = JSON.parse(body);
+     //   console.log(respBody);
+        respBody.title.should.equal('new title3');
+        done();
+      }
+    }
+    request(options, callback);
+  })
 
 
   //
